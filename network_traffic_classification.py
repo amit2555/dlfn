@@ -13,6 +13,8 @@ LABELS = {}
 counter = iter(range(20))
 
 def pad_and_convert(s):
+    """Collect 1000 bytes from packet payload. If payload length is less than
+    1000 bytes, pad zeroes at the end. Then convert to integers and normalize."""
     if len(s) < 2000:
         s += '00' * (2000-len(s))
     else:
@@ -40,7 +42,7 @@ def main():
     activation = 'relu'
     df = preprocess('Dataset')
     df['data'] = df['data'].apply(pad_and_convert)
-    num_classes = len(LABELS) 
+    num_classes = len(LABELS)
     X_train, X_test, y_train, y_test = train_test_split(df['data'], df['label'],
                                                         test_size=0.3, random_state=4)
     X_train = X_train.apply(pd.Series)
@@ -55,9 +57,6 @@ def main():
     model.add(MaxPooling1D())
     model.add(Dropout(0.25))
     model.add(Conv1D(256, strides=2, activation=activation, kernel_size=3, padding='same'))
-    model.add(MaxPooling1D())
-    model.add(Dropout(0.25))
-    model.add(Conv1D(128, strides=2, activation=activation, kernel_size=3, padding='same'))
     model.add(MaxPooling1D())
     model.add(Dropout(0.25))
     model.add(Flatten())
