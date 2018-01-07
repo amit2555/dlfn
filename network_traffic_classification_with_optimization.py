@@ -84,7 +84,7 @@ def main():
     best_parameters = grid_result.best_params_
     best_accuracy = grid_result.best_score_
 
-    print('Best parameters are: {}\nBest score is: {}'.format(best_params_, best_score_))
+    print('Best parameters are: {}\nBest score is: {}'.format(best_parameters, best_accuracy))
 
 if __name__ == '__main__':
     main()

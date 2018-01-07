@@ -55,18 +55,18 @@ def main():
     model = Sequential()
     model.add(Conv1D(512, strides=2, input_shape=X_train.shape[1:], activation=activation, kernel_size=3, padding='same'))
     model.add(MaxPooling1D())
-    model.add(Dropout(0.25))
     model.add(Conv1D(256, strides=2, activation=activation, kernel_size=3, padding='same'))
     model.add(MaxPooling1D())
-    model.add(Dropout(0.25))
     model.add(Flatten())
     model.add(Dense(128, activation=activation))
+    model.add(Dropout(0.5))
     model.add(Dense(32, activation=activation))
+    model.add(Dropout(0.5))
     model.add(Dense(num_classes, activation='softmax'))
     print(model.summary())
 
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-    result = model.fit(X_train, y_train, verbose=1, epochs=100, batch_size=128, validation_data=(X_test, y_test))
+    result = model.fit(X_train, y_train, verbose=1, epochs=50, batch_size=32, validation_data=(X_test, y_test))
 
 if __name__ == '__main__':
     main()
